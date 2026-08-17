@@ -1,6 +1,6 @@
 # Introduction
 
-This is my implementation of the exercises from the book "Command-Line Rust, A Porject-Based primer for Writing Rust CLIs"
+This is my implementation of the exercises from the book "Command-Line Rust, A Project-Based primer for Writing Rust CLIs", 2021 version.
 
 ## Exercises
 

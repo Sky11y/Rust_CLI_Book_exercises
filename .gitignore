@@ -1,6 +1,14 @@
+# ignore all
 /*
+
+# allow these
 !.gitignore
-!echor
 !README.md
+!echor
+!catr
+
+# ignore these inside the allowed
+target
+expected
 
 
