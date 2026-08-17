@@ -23,6 +23,11 @@ fn run(args: &[&str], expected_file: &str) -> TestResult {
     Ok(())
 }
 
+/*
+    IMPORTANT!
+    To make the tests below to pass, run the mk-outs.sh in the crate root to
+    create the test files
+*/
 #[test]
 fn hello1() -> TestResult {
     run(&["Hello there"], "tests/expected/hello1.txt")
