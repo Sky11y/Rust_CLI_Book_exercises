@@ -72,3 +72,339 @@ fn dies_bytes_and_lines() -> TestResult {
 
     Ok(())
 }
+
+#[test]
+fn skips_bad_file() -> TestResult {
+    let bad = gen_bad_file();
+    let expected = format!("{}: .* [(]os error 2[)]", bad);
+    Command::cargo_bin(PRG)?
+        .args([EMPTY, &bad, ONE])
+        .assert()
+        .stderr(predicate::str::is_match(expected)?);
+
+    Ok(())
+}
+
+fn run(args: &[&str], expected_file: &str) -> TestResult {
+    let mut file = File::open(expected_file)?;
+    let mut buffer = Vec::new();
+    file.read_to_end(&mut buffer)?;
+    let expected = String::from_utf8_lossy(&buffer);
+
+    Command::cargo_bin(PRG)?
+        .args(args)
+        .assert()
+        .success()
+        .stdout(predicate::eq(&expected.as_bytes() as &[u8]));
+
+    Ok(())
+}
+
+fn run_stdin(args: &[&str], input_file: &str, expected_file: &str) -> TestResult {
+    let mut file = File::open(expected_file)?;
+    let mut buffer = Vec::new();
+    file.read_to_end(&mut buffer)?;
+    let expected = String::from_utf8_lossy(&buffer);
+    let input = fs::read_to_string(input_file)?;
+
+    Command::cargo_bin(PRG)?
+        .write_stdin(input)
+        .args(args)
+        .assert()
+        .stdout(predicate::eq(&expected.as_bytes() as &[u8]));
+
+    Ok(())
+}
+
+/* EMPTY */
+
+#[test]
+fn empty() -> TestResult {
+    run(&[EMPTY], "tests/expected/empty.txt.out")
+}
+
+#[test]
+fn empty_n2() -> TestResult {
+    run(&[EMPTY, "-n", "2"], "tests/expected/empty.txt.n2.out")
+}
+
+#[test]
+fn empty_n4() -> TestResult {
+    run(&[EMPTY, "-n", "4"], "tests/expected/empty.txt.n4.out")
+}
+
+#[test]
+fn empty_c2() -> TestResult {
+    run(&[EMPTY, "-c", "2"], "tests/expected/empty.txt.c2.out")
+}
+
+#[test]
+fn empty_c4() -> TestResult {
+    run(&[EMPTY, "-c", "4"], "tests/expected/empty.txt.c4.out")
+}
+
+/* ONE */
+
+#[test]
+fn one() -> TestResult {
+    run(&[ONE], "tests/expected/one.txt.out")
+}
+
+#[test]
+fn one_n2() -> TestResult {
+    run(&[ONE, "-n", "2"], "tests/expected/one.txt.n2.out")
+}
+
+#[test]
+fn one_n4() -> TestResult {
+    run(&[ONE, "-n", "4"], "tests/expected/one.txt.n4.out")
+}
+
+#[test]
+fn one_c1() -> TestResult {
+    run(&[ONE, "-c", "1"], "tests/expected/one.txt.c1.out")
+}
+
+#[test]
+fn one_c2() -> TestResult {
+    run(&[ONE, "-c", "2"], "tests/expected/one.txt.c2.out")
+}
+
+#[test]
+fn one_c4() -> TestResult {
+    run(&[ONE, "-c", "4"], "tests/expected/one.txt.c4.out")
+}
+
+#[test]
+fn one_stdin() -> TestResult {
+    run_stdin(&[], ONE, "tests/expected/one.txt.out")
+}
+
+#[test]
+fn one_n2_stdin() -> TestResult {
+    run_stdin(&["-n", "2"], ONE, "tests/expected/one.txt.n2.out")
+}
+
+#[test]
+fn one_n4_stdin() -> TestResult {
+    run_stdin(&["-n", "4"], ONE, "tests/expected/one.txt.n4.out")
+}
+
+#[test]
+fn one_c1_stdin() -> TestResult {
+    run_stdin(&["-c", "1"], ONE, "tests/expected/one.txt.c1.out")
+}
+
+#[test]
+fn one_c2_stdin() -> TestResult {
+    run_stdin(&["-c", "2"], ONE, "tests/expected/one.txt.c2.out")
+}
+
+#[test]
+fn one_c4_stdin() -> TestResult {
+    run_stdin(&["-c", "4"], ONE, "tests/expected/one.txt.c4.out")
+}
+
+/* TWO */
+#[test]
+fn two() -> TestResult {
+    run(&[TWO], "tests/expected/two.txt.out")
+}
+
+#[test]
+fn two_n2() -> TestResult {
+    run(&[TWO, "-n", "2"], "tests/expected/two.txt.n2.out")
+}
+
+#[test]
+fn two_n4() -> TestResult {
+    run(&[TWO, "-n", "4"], "tests/expected/two.txt.n4.out")
+}
+
+#[test]
+fn two_c1() -> TestResult {
+    run(&[TWO, "-c", "1"], "tests/expected/two.txt.c1.out")
+}
+
+#[test]
+fn two_c2() -> TestResult {
+    run(&[TWO, "-c", "2"], "tests/expected/two.txt.c2.out")
+}
+
+#[test]
+fn two_c4() -> TestResult {
+    run(&[TWO, "-c", "4"], "tests/expected/two.txt.c4.out")
+}
+
+#[test]
+fn two_stdin() -> TestResult {
+    run_stdin(&[], TWO, "tests/expected/two.txt.out")
+}
+
+#[test]
+fn two_n2_stdin() -> TestResult {
+    run_stdin(&["-n", "2"], TWO, "tests/expected/two.txt.n2.out")
+}
+
+#[test]
+fn two_n4_stdin() -> TestResult {
+    run_stdin(&["-n", "4"], TWO, "tests/expected/two.txt.n4.out")
+}
+
+#[test]
+fn two_c1_stdin() -> TestResult {
+    run_stdin(&["-c", "1"], TWO, "tests/expected/two.txt.c1.out")
+}
+
+#[test]
+fn two_c2_stdin() -> TestResult {
+    run_stdin(&["-c", "2"], TWO, "tests/expected/two.txt.c2.out")
+}
+
+#[test]
+fn two_c4_stdin() -> TestResult {
+    run_stdin(&["-c", "4"], TWO, "tests/expected/two.txt.c4.out")
+}
+
+/* THREE */
+
+#[test]
+fn three() -> TestResult {
+    run(&[THREE], "tests/expected/three.txt.out")
+}
+
+#[test]
+fn three_n2() -> TestResult {
+    run(&[THREE, "-n", "2"], "tests/expected/three.txt.n2.out")
+}
+
+#[test]
+fn three_n4() -> TestResult {
+    run(&[THREE, "-n", "4"], "tests/expected/three.txt.n4.out")
+}
+
+#[test]
+fn three_c2() -> TestResult {
+    run(&[THREE, "-c", "2"], "tests/expected/three.txt.c2.out")
+}
+
+#[test]
+fn three_c4() -> TestResult {
+    run(&[THREE, "-c", "4"], "tests/expected/three.txt.c4.out")
+}
+
+#[test]
+fn three_stdin() -> TestResult {
+    run_stdin(&[], THREE, "tests/expected/three.txt.out")
+}
+
+#[test]
+fn three_n2_stdin() -> TestResult {
+    run_stdin(&["-n", "2"], THREE, "tests/expected/three.txt.n2.out")
+}
+
+#[test]
+fn three_n4_stdin() -> TestResult {
+    run_stdin(&["-n", "4"], THREE, "tests/expected/three.txt.n4.out")
+}
+
+#[test]
+fn three_c2_stdin() -> TestResult {
+    run_stdin(&["-c", "2"], THREE, "tests/expected/three.txt.c2.out")
+}
+
+#[test]
+fn three_c4_stdin() -> TestResult {
+    run_stdin(&["-c", "4"], THREE, "tests/expected/three.txt.c4.out")
+}
+
+/* TWELVE */
+
+#[test]
+fn twelve() -> TestResult {
+    run(&[TWELVE], "tests/expected/twelve.txt.out")
+}
+
+#[test]
+fn twelve_n2() -> TestResult {
+    run(&[TWELVE, "-n", "2"], "tests/expected/twelve.txt.n2.out")
+}
+
+#[test]
+fn twelve_n4() -> TestResult {
+    run(&[TWELVE, "-n", "4"], "tests/expected/twelve.txt.n4.out")
+}
+
+#[test]
+fn twelve_c2() -> TestResult {
+    run(&[TWELVE, "-c", "2"], "tests/expected/twelve.txt.c2.out")
+}
+
+#[test]
+fn twelve_c4() -> TestResult {
+    run(&[TWELVE, "-c", "4"], "tests/expected/twelve.txt.c4.out")
+}
+
+#[test]
+fn twelve_stdin() -> TestResult {
+    run_stdin(&[], TWELVE, "tests/expected/twelve.txt.out")
+}
+
+#[test]
+fn twelve_n2_stdin() -> TestResult {
+    run_stdin(&["-n", "2"], TWELVE, "tests/expected/twelve.txt.n2.out")
+}
+
+#[test]
+fn twelve_n4_stdin() -> TestResult {
+    run_stdin(&["-n", "4"], TWELVE, "tests/expected/twelve.txt.n4.out")
+}
+
+#[test]
+fn twelve_c2_stdin() -> TestResult {
+    run_stdin(&["-c", "2"], TWELVE, "tests/expected/twelve.txt.c2.out")
+}
+
+#[test]
+fn twelve_c4_stdin() -> TestResult {
+    run_stdin(&["-c", "4"], TWELVE, "tests/expected/twelve.txt.c4.out")
+}
+
+/* MULTIPLE */
+
+#[test]
+fn multiple_files() -> TestResult {
+    run(&[EMPTY, ONE, TWO, THREE, TWELVE], "tests/expected/all.out")
+}
+
+#[test]
+fn multiple_files_n2() -> TestResult {
+    run(
+        &[EMPTY, ONE, TWO, THREE, TWELVE, "-n", "2"],
+        "tests/expected/all.n2.out",
+    )
+}
+
+#[test]
+fn multiple_files_n4() -> TestResult {
+    run(
+        &[EMPTY, ONE, TWO, THREE, TWELVE, "-n", "4"],
+        "tests/expected/all.n4.out",
+    )
+}
+
+#[test]
+fn multiple_files_c2() -> TestResult {
+    run(
+        &[EMPTY, ONE, TWO, THREE, TWELVE, "-c", "2"],
+        "tests/expected/all.c2.out",
+    )
+}
+
+#[test]
+fn multiple_files_c4() -> TestResult {
+    run(
+        &[EMPTY, ONE, TWO, THREE, TWELVE, "-c", "4"],
+        "tests/expected/all.c4.out",
+    )
+}
