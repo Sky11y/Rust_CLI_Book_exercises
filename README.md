@@ -22,7 +22,7 @@ The following CLI tools will be build:
     - FLAGS:
         - n | lines &emsp;              Lines to print (default 10).
         - c | bytes &emsp;              Bytes to print.
-- wc [wip]
+- wc [done]
     - Prints the number of lines, words, bytes, and characters in each file given as argument, to stdout.
     - If no flag is set, defaults to -c -l -w
     - If at least one flag is set, prints only the flags set.
