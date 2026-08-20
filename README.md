@@ -32,6 +32,7 @@ The following CLI tools will be build:
         - l | lines &emsp;              Display number of lines. 
         - w | words &emsp;              Display number of words.
         - m | chars &emsp;              Display number of characters.
+    - Note. I used GNU version of wc, which seem to have different padding for the values depending on the input. So to pass the tests I had to implement some padding functionality.
 - uniq
 - find
 - cut

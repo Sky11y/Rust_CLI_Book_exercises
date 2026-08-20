@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 INPUTS="./tests/inputs"
-FILES="$INPUTS/*.txt"
+FILES="$INPUTS/empty.txt $INPUTS/fox.txt $INPUTS/atlamal.txt"
 OUTDIR="./tests/expected"
 
 [[ ! -d "$OUTDIR" ]] && mkdir -p "$OUTDIR"
@@ -21,7 +21,7 @@ for FILE in $FILES; do
     wc -ml  $FILE > ${OUTDIR}/${BASENAME}.ml.out
 done
 
-wc < "$INPUTS/atlamal.txt" > "$OUTDIR/atlamal.txt.stdin.out"
+cat < "$INPUTS/atlamal.txt" | wc > "$OUTDIR/atlamal.txt.stdin.out"
 
 wc      $FILES > $OUTDIR/all.out
 wc -l   $FILES > $OUTDIR/all.l.out
