@@ -11,7 +11,7 @@ The following CLI tools will be build:
 
     | Short | Long | About |
     | ----|----|----|
-    | n | n/a | Don't print newline at the end. |
+    | n | n/a | Don't print newline at the end |
 - cat [done]
     - Prints provided files given as arguments to stdout. If no files are given, defaults to stdin.
     - Both flags are not allowed to be set at the same time.
@@ -19,8 +19,8 @@ The following CLI tools will be build:
 
     | Short | Long | About |
     | ----|----|----|
-        | n | number | print line numbers. |
-        | b | number-nonblank | print non-blank line numbers. |
+    | n | number | print line numbers |
+    | b | number-nonblank | print non-blank line numbers |
 - head [done]
     - Prints the first lines of files given as arguments. If no files are given, default to stdin.
     - BSD version, i.e. doesn't allow negative values for flags.
@@ -29,8 +29,8 @@ The following CLI tools will be build:
 
     | Short | Long | About |
     | ----|----|----|
-        | n | lines | Lines to print (default 10). |
-        | c | bytes | Bytes to print. |
+    | n | lines | Lines to print (default 10) |
+    | c | bytes | Bytes to print |
 - wc [done]
     - Prints the number of lines, words, bytes, and characters in each file given as argument, to stdout.
     - If no flag is set, defaults to -c -l -w
@@ -40,10 +40,10 @@ The following CLI tools will be build:
 
     | Short | Long | About |
     | ----|----|----|
-        | c | bytes | Display number of bytes. |
-        | l | lines | Display number of lines. |
-        | w | words | Display number of words. |
-        | m | chars | Display number of characters. |
+    | c | bytes | Display number of bytes |
+    | l | lines | Display number of lines |
+    | w | words | Display number of words |
+    | m | chars | Display number of characters |
 
     - Note. I used GNU version of wc, which seem to have different padding for the values depending on the input. So to pass the tests I had to implement some padding functionality.
 - uniq
