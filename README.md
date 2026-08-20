@@ -8,6 +8,7 @@ The following CLI tools will be build:
 - echo [done]
     - Prints provided arguments to stdout.
     - FLAGS
+
     | Short | Long | About |
     | ----|----|----|
     | n | n/a | Don't print newline at the end. |
@@ -15,9 +16,9 @@ The following CLI tools will be build:
     - Prints provided files given as arguments to stdout. If no files are given, defaults to stdin.
     - Both flags are not allowed to be set at the same time.
     - FLAGS
+
     | Short | Long | About |
     | ----|----|----|
-
         | n | number | print line numbers. |
         | b | number-nonblank | print non-blank line numbers. |
 - head [done]
@@ -25,6 +26,7 @@ The following CLI tools will be build:
     - BSD version, i.e. doesn't allow negative values for flags.
     - Both flags are not allowed to be set at the same time.
     - FLAGS
+
     | Short | Long | About |
     | ----|----|----|
         | n | lines | Lines to print (default 10). |
@@ -35,12 +37,14 @@ The following CLI tools will be build:
     - If at least one flag is set, prints only the flags set.
     - Flags -c and -m can't be set at the same time.
     - FLAGS
+
     | Short | Long | About |
     | ----|----|----|
         | c | bytes | Display number of bytes. |
         | l | lines | Display number of lines. |
         | w | words | Display number of words. |
         | m | chars | Display number of characters. |
+
     - Note. I used GNU version of wc, which seem to have different padding for the values depending on the input. So to pass the tests I had to implement some padding functionality.
 - uniq
 - find
