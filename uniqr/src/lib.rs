@@ -1,5 +1,4 @@
 use clap::Parser;
-#[allow(unused_imports)]
 use std::{
     error::Error,
     fs::File,
@@ -26,6 +25,54 @@ pub struct Opts {
 type MyResult<T> = Result<T, Box<dyn Error>>;
 
 pub fn run(args: Opts) -> MyResult<()> {
-    println!("{:#?}", args);
+    let mut infile = open(&args.infile).map_err(|e| format!("{}: {}", args.infile, e))?;
+
+    let mut outfile: Box<dyn Write> = match &args.outfile {
+        Some(outfile) => Box::new(File::create(outfile)?),
+        _ => Box::new(io::stdout()),
+    };
+    let mut line = String::new();
+    let mut previous = String::new();
+    let mut count: u64 = 0;
+
+    let mut print = |count: u64, text: &str| -> MyResult<()> {
+        if count > 0 {
+            if args.count {
+                write!(outfile, "{:>7} {}", count, text)?;
+            } else {
+                write!(outfile, "{}", text)?;
+            }
+        };
+        Ok(())
+    };
+
+    loop {
+        let bytes = infile.read_line(&mut line)?;
+        if bytes == 0 {
+            break;
+        }
+
+        if line.trim_end() != previous.trim_end() {
+            print(count, &previous)?;
+            previous = line.clone();
+            count = 0;
+        }
+
+        count += 1;
+        line.clear();
+    }
+
+    // if file is not empty add newline to the end of file if it doesn't have one.
+    if previous.len() > 0 && previous.chars().last().unwrap() != '\n' {
+        previous.push('\n');
+    }
+    print(count, &previous)?;
     Ok(())
+}
+
+fn open(filename: &str) -> MyResult<Box<dyn BufRead>> {
+    match filename {
+        "-" => Ok(Box::new(BufReader::new(io::stdin()))),
+        _ => Ok(Box::new(BufReader::new(File::open(filename)?))),
+    }
 }
