@@ -2,6 +2,9 @@
 
 This is my implementation of the exercises from the book "Command-Line Rust, A Project-Based primer for Writing Rust CLIs", 2021 version.
 
+"old" clap (v. 2.33) with Arg:: syntax is used for commands: echo, cat, head, and wc.
+"new" clap (v. 4^) is used for everything else (uniq, find, cut, grep, comm, tail, ls).
+
 ## Exercises
 
 The following CLI tools will be build:

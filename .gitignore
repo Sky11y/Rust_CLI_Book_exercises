@@ -1,15 +1,20 @@
-# ignore all
+### IGNORE ALL ###
 /*
 
-# allow these
-!.gitignore
-!README.md
+### ALLOW THESE ###
+# exercises
 !echor
 !catr
 !headr
 !wcr
+!uniqr
 
-# ignore these inside the allowed
+# other
+!.gitignore
+!README.md
+!clean.sh
+
+### IGNORE THESE INSIDE THE ALLOWED ###
 target
 expected
 
